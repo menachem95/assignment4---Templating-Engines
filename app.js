@@ -6,7 +6,8 @@ const app = express();
 
 const users = [];
 
-app.set("view engine", "pug");
+app.engine("hbs", expressHbs.engine({defaultLayout: "main-layout", extname: "hbs"}))
+app.set("view engine", "hbs");
 app.set("views", "views");
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -16,7 +17,7 @@ app.get("/", (req, res, next) => {
 });
 
 app.get("/users", (req, res, next) => {
-  res.render("users", { pageTitle: "User", users });
+  res.render("users", { pageTitle: "User", users, hasUsers: users.length > 0 });
 });
 
 app.post("/add-user", (req, res, next) => {
